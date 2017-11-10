@@ -78,7 +78,7 @@ bool isDir(const char *filename)
  * 			cause an error, an appropriate error message will be noted
  * Purpose: To print the contents of one or more files to screen
  */
-int main(int argc, char **argv)
+int runCatCommand(int argc, char **argv)
 {
 	if (argc == 1) // Check if the program contains arguments
 	{
