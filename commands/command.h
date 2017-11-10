@@ -50,5 +50,6 @@ const char cmds[NUM_CMDS][MAX_CMD_LENGTH] = {"cat", "cd", "df",
 bool cat(const char *filename);
 bool isDir(const char *filename);
 bool readFile(int fd);
+int  runCatCommand(int argc, char **argv)
 
 #endif

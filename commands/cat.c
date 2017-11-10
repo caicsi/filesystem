@@ -73,41 +73,6 @@ bool isDir(const char *filename)
 
 
 /*
- * Pre: 	None, other than optional arguments
- * Post: 	Contents of a file, or files, are printed to screen. Should something
- * 			cause an error, an appropriate error message will be noted
- * Purpose: To print the contents of one or more files to screen
- */
-int runCatCommand(int argc, char **argv)
-{
-	if (argc == 1) // Check if the program contains arguments
-	{
-		fprintf(stderr, "usage %s FILE [FILE] ...\n", argv[0]);
-		return EXIT_FAILURE;
-	} 
-	else 
-	{
-		int i;
-		
-		for (i = 1; i < argc; i++) // Cycle through multiple arguments
-		{
-			if (isDir(argv[i])) // Check if argument is a directory
-			{
-				fprintf(stderr, "cat: %s: Is a directory\n", argv[i]);
-			}
-			else if (!cat(argv[i])) // Printing contents of a file, if it exists
-			{
-				fprintf(stderr, "cat: %s: No such file or directory\n", argv[i]);	// Actually, this could be a existant directory
-				return EXIT_FAILURE;
-			}
-		}
-	}
-	
-	return EXIT_SUCCESS;
-}
-
-
-/*
  * Pre: 	A file descriptor
  * Post: 	True is returned if the file is read, false otherwise
  * Purpose: To read the contents of a file to stdout
@@ -147,4 +112,39 @@ bool readFile(int fd)
 	{
 		return FALSE;
 	}
+}
+
+
+/*
+ * Pre: 	None, other than optional arguments
+ * Post: 	Contents of a file, or files, are printed to screen. Should something
+ * 			cause an error, an appropriate error message will be noted
+ * Purpose: To print the contents of one or more files to screen
+ */
+int runCatCommand(int argc, char **argv) // Note, this is main function of cat
+{
+	if (argc == 1) // Check if the program contains arguments
+	{
+		fprintf(stderr, "usage %s FILE [FILE] ...\n", argv[0]);
+		return EXIT_FAILURE;
+	} 
+	else 
+	{
+		int i;
+		
+		for (i = 1; i < argc; i++) // Cycle through multiple arguments
+		{
+			if (isDir(argv[i])) // Check if argument is a directory
+			{
+				fprintf(stderr, "cat: %s: Is a directory\n", argv[i]);
+			}
+			else if (!cat(argv[i])) // Printing contents of a file, if it exists
+			{
+				fprintf(stderr, "cat: %s: No such file or directory\n", argv[i]);	// Actually, this could be a existant directory
+				return EXIT_FAILURE;
+			}
+		}
+	}
+	
+	return EXIT_SUCCESS;
 }
