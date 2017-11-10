@@ -20,9 +20,9 @@
 
 
 // Global array of custom commands
-char *CMD_STRS[] = {"cd", "cat", "help", "exit"};
+char *CMD_STRS[] = {"cd", "cat", "help", "exit", "pwd"};
 // Global parallel array of corresponding functions
-int (*CMD_FUNCS[]) (char **) = {&cd, &cat, &help, &exitShell};
+int (*CMD_FUNCS[]) (char **) = {&cd, &cat, &help, &exitShell, &pwd};
 
 
  /*

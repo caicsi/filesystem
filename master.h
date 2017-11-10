@@ -25,7 +25,7 @@
 #include <string.h>
 
 #ifndef NUM_CMDS
-#define NUM_CMDS 4
+#define NUM_CMDS 5
 #endif
 
 #ifndef TOK_BUFSIZE
@@ -38,6 +38,10 @@
 
 #ifndef CAT_BUFSIZE 
 #define CAT_BUFSIZE 4096
+#endif
+
+#ifndef PWD_BUFSIZE
+#define PWD_BUFSIZE 1024
 #endif
 
 typedef enum {FALSE, TRUE} bool;
@@ -61,5 +65,8 @@ int  cat(char **argv);
 bool isDir(const char *filename);
 bool openFile(const char *filename);
 bool readFile(int fd);
+
+// Function specific to pwd command
+int pwd(char **argv);
 
 #endif
