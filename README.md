@@ -1,6 +1,11 @@
 # filesystem
 Final project for OS class
 
+
+NOTE: I did not do this exactly, but you'll see
+NOTE: Run make, then run the executable in build dir. To exit the shell properly, enter exit. Failing to run exit will result in a mem leak!
+
+
 Make the shell:
 Parent processor gives prompt
 PP checks if user input is valid command
@@ -16,5 +21,3 @@ char cmdName- just the name of the command, like “cd”. parent can loop throu
 char funcName- name of the function that calls this specific command, like “cdExe” or something.
 int minParam
 int maxParam
-
-http://www.gnu.org/software/libc/manual/html_node/Implementing-a-Shell.html#Implementing-a-Shell 

@@ -13,36 +13,41 @@
  */
  
  
- #include "command.h"
+ #include "../master.h"
 
 
 /*
- * Pre: 	A specified filename
- * Post: 	True is returned if the file is opened and read successfully, 
- * 		 	false otherwise
- * Purpose: To open a specific file and call the readFile function
+ * Pre: 	None, other than optional arguments
+ * Post: 	Contents of a file, or files, are printed to screen. Should something
+ * 			cause an error, an appropriate error message will be noted
+ * Purpose: To print the contents of one or more files to screen
  */
-bool cat(const char *filename)
+int cat(char **argv) // Note, this is main function of cat
 {
-	int fd;
-	bool status = FALSE;
-	
-	// Attempt to open file for reading
-	if ((fd = open(filename, O_RDONLY)) == -1)
+	if (argv[1] == NULL) 
 	{
-		return FALSE;
+		fprintf(stderr, "usage %s FILE [FILE] ...\n", argv[0]);
+	}
+	else
+	{
+		int i = 1;
+		
+		while (argv[i] != NULL)
+		{
+			if (isDir(argv[i])) // Check if argument is a directory
+			{
+				fprintf(stderr, "cat: %s: Is a directory\n", argv[i]);
+			}
+			else if (!openFile(argv[i])) // Printing contents of a file, if it exists
+			{
+				fprintf(stderr, "cat: %s: No such file or directory\n", argv[i]);	// Actually, this could be a existant directory
+			}			
+			
+			i++;
+		}
 	}
 	
-	// If opened successfully, call read function
-	status = readFile(fd);
-	
-	// Attempt to close file
-	if (close(fd) != 0)
-	{
-		return FALSE;
-	}
-	
-	return status;
+	return 1;
 }
 
 
@@ -73,17 +78,47 @@ bool isDir(const char *filename)
 
 
 /*
+ * Pre: 	A specified filename
+ * Post: 	True is returned if the file is opened and read successfully, 
+ * 		 	false otherwise
+ * Purpose: To open a specific file and call the readFile function
+ */
+bool openFile(const char *filename)
+{
+	int fd;
+	bool status = FALSE;
+	
+	// Attempt to open file for reading
+	if ((fd = open(filename, O_RDONLY)) == -1)
+	{
+		return FALSE;
+	}
+	
+	// If opened successfully, call read function
+	status = readFile(fd);
+	
+	// Attempt to close file
+	if (close(fd) != 0)
+	{
+		return FALSE;
+	}
+	
+	return status;
+}
+
+
+/*
  * Pre: 	A file descriptor
  * Post: 	True is returned if the file is read, false otherwise
  * Purpose: To read the contents of a file to stdout
  */
 bool readFile(int fd)
 {
-	char buffer[BUFFER_SIZE];
+	char buffer[CAT_BUFSIZE];
 	int  numRead, numWritten;
 	
 	// Read contents of the file into the buffer
-	numRead = read(fd, buffer, BUFFER_SIZE);
+	numRead = read(fd, buffer, CAT_BUFSIZE);
 	
 	// Write contents from buffer to stdout
 	while (numRead > 0)
@@ -101,7 +136,7 @@ bool readFile(int fd)
 			fprintf(stderr, "Only wrote %i bytes out of %i\n", numWritten, numRead);
 		}
 		
-		numRead = read(fd, buffer, BUFFER_SIZE);
+		numRead = read(fd, buffer, CAT_BUFSIZE);
 	}
 	
 	if (numRead == 0)
@@ -112,39 +147,4 @@ bool readFile(int fd)
 	{
 		return FALSE;
 	}
-}
-
-
-/*
- * Pre: 	None, other than optional arguments
- * Post: 	Contents of a file, or files, are printed to screen. Should something
- * 			cause an error, an appropriate error message will be noted
- * Purpose: To print the contents of one or more files to screen
- */
-int runCatCommand(int argc, char **argv) // Note, this is main function of cat
-{
-	if (argc == 1) // Check if the program contains arguments
-	{
-		fprintf(stderr, "usage %s FILE [FILE] ...\n", argv[0]);
-		return EXIT_FAILURE;
-	} 
-	else 
-	{
-		int i;
-		
-		for (i = 1; i < argc; i++) // Cycle through multiple arguments
-		{
-			if (isDir(argv[i])) // Check if argument is a directory
-			{
-				fprintf(stderr, "cat: %s: Is a directory\n", argv[i]);
-			}
-			else if (!cat(argv[i])) // Printing contents of a file, if it exists
-			{
-				fprintf(stderr, "cat: %s: No such file or directory\n", argv[i]);	// Actually, this could be a existant directory
-				return EXIT_FAILURE;
-			}
-		}
-	}
-	
-	return EXIT_SUCCESS;
 }

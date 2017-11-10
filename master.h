@@ -12,44 +12,54 @@
  * and all additional sources are cited. 
  */
 
-#ifndef COMMAND_H
-#define COMMAND_H
+#ifndef MASTER_H
+#define MASTER_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <dirent.h>
-#include "cat.c"
+#include <string.h>
 
-// Total number of commands implemented
 #ifndef NUM_CMDS
-#define NUM_CMDS 11
+#define NUM_CMDS 4
 #endif
 
-// Max length for name of a command (including '\0')
-#ifndef
-#define MAX_CMD_LENGTH 6
+#ifndef TOK_BUFSIZE
+#define TOK_BUFSIZE 64
 #endif
 
-// Size of buffer for i/o purposes
-#ifndef BUFFER_SIZE 
-#define BUFFER_SIZE 4096
+#ifndef TOK_DELIM
+#define TOK_DELIM " \t\r\n\a"
+#endif
+
+#ifndef CAT_BUFSIZE 
+#define CAT_BUFSIZE 4096
 #endif
 
 typedef enum {FALSE, TRUE} bool;
 
-// Char array that stores names of implemented commands
-const char cmds[NUM_CMDS][MAX_CMD_LENGTH] = {"cat", "cd", "df", 
-											 "ls", "mkdir", "pbs", 
-											 "pfe", "pwd", "rm", 
-											 "rmdir", "touch"};
+// Useful shell functions
+int exitShell(char **argv);
+int help(char **argv);
+
+// Other functions specific to the shell
+int  executeCommand(char **argv);
+int  launch(char **argv);
+char **parseLine(char *line);
+char *readLine();
+void shellLoop();
+
+// Function specific to cd command
+int cd(char **argv);
 
 // Functions specific to cat command
-bool cat(const char *filename);
+int  cat(char **argv);
 bool isDir(const char *filename);
+bool openFile(const char *filename);
 bool readFile(int fd);
-int  runCatCommand(int argc, char **argv)
 
 #endif
