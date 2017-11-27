@@ -11,7 +11,6 @@
  *          March, 2004.
  *****************************************************************************/
 
-#include <stdio.h>
 #include "bootSector.h"
 
 /******************************************************************************
@@ -36,7 +35,7 @@ extern int BYTES_PER_SECTOR;
  * Return: the number of bytes read, or -1 if the read fails.
  *****************************************************************************/
 
-int read_sector(int sector_number, unsigned char* buffer)
+int read_sector(int sector_number, char* buffer)
 {
    int bytes_read;
 
@@ -71,7 +70,7 @@ int read_sector(int sector_number, unsigned char* buffer)
  * Return: the number of bytes written, or -1 if the read fails.
  ****************************************************************************/
 
-int write_sector(int sector_number, unsigned char* buffer) 
+int write_sector(int sector_number, char* buffer) 
 {
    int bytes_written;
 
@@ -107,7 +106,7 @@ int write_sector(int sector_number, unsigned char* buffer)
  * Return: the value at the specified entry of the given FAT
  ****************************************************************************/
 
-int get_fat_entry(int fat_entry_number, unsigned char* fat) 
+int get_fat_entry(int fat_entry_number, char* fat) 
 {
    int offset;
    int uv, wx, yz;
@@ -144,7 +143,7 @@ int get_fat_entry(int fat_entry_number, unsigned char* fat)
  * fat:  The fat table in which to set the given value at the specified entry
  *****************************************************************************/
 
-void set_fat_entry(int fat_entry_number, int value, unsigned char* fat) 
+void set_fat_entry(int fat_entry_number, int value, char* fat) 
 {
    int offset;
    int uv, wx, yz, a, b, c;
@@ -183,6 +182,7 @@ void set_fat_entry(int fat_entry_number, int value, unsigned char* fat)
 int readBootSector(bootSector_t boot)
 {
 	char *buffer;
+	int  mostSigBits, leastSigBits;
 
 	if (read_sector(0, buffer) == -1)
 	{
@@ -190,11 +190,18 @@ int readBootSector(bootSector_t boot)
 	}
 	
 	// assign values
-	boot.numOfFats = buffer[16];
-	boot.sectorsPerCluster = buffer[13];
-	// conversion
-	printf("%i\n", boot.numOfFats);
-	printf("%i\n", boot.sectorsPerCluster);
+	
+	// bytes per sector - 12 (not 11) because little endian
+	mostSigBits = (((int) buffer[12]) << 8 ) & 0x0000ff00;
+	leastSigBits = ((int) buffer[11]) & 0x000000ff;
+	boot.bytesPerSector = mostSigBits | leastSigBits;
+	printf("BytesPerSect: %i (512 expected)\n", boot.bytesPerSector);
+	
+	// number of fats
+	/*mostSigBits = (((int) buffer[23]) << 8 ) & 0x0000ff00;
+	leastSigBits = ((int) buffer[22]) & 0x000000ff;
+	boot.sectorsPerFat = mostSigBits | leastSigBits;
+	printf("SectsPerFat: %i (9 expected)\n", boot.sectorsPerFat);*/
 	
 	return EXIT_SUCCESS;
 }

@@ -8,6 +8,7 @@
 #include "bootSector.h"
 #include <string.h>
 #include "dda.h"
+#include "fatSupport.h"
 
 // 13 is NOT the correct number -- you fix it!
 #define BYTES_TO_READ_IN_BOOT_SECTOR 13
@@ -63,11 +64,11 @@ extern void set_fat_entry(int fat_entry_number, int value, char* fat);
 
 int main()
 {
-	unsigned char* boot;            // example buffer
+	// unsigned char* boot;            // example buffer
 
-	int mostSignificantBits;
-	int leastSignificantBits;
-	int bytesPerSector;
+	// int mostSignificantBits;
+	// int leastSignificantBits;
+	// int bytesPerSector;
 
 	// You must set two global variables for the disk access functions:
 	//      FILE_SYSTEM_ID         BYTES_PER_SECTOR
@@ -94,15 +95,8 @@ int main()
 
 	readBootSector(BOOT_SECTOR);
 
-	// 12 (not 11) because little endian
-	//mostSignificantBits  = ( ( (int) boot[12] ) << 8 ) & 0x0000ff00;
-	//leastSignificantBits =   ( (int) boot[11] )        & 0x000000ff;
-	//bytesPerSector = mostSignificantBits | leastSignificantBits;
-
-	//printf("%d\n", bytesPerSector);
-
 	return 0;
 }
 
 
-// later: http://minirighi.sourceforge.net/html/fat12_8c-source.html
+// note: http://minirighi.sourceforge.net/html/fat12_8c-source.html
