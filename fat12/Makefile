@@ -1,7 +1,7 @@
 CC=gcc
 CCFLAGS=-Wall
 
-SOURCES=$(wildcard *.c)
+SOURCES=$(wildcard *.c ../commands/pbs.c) # this is temporary
 OBJECTS=$(SOURCES:.c=.o)
 
 EXECUTABLE=fat # change executable name as needed

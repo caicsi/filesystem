@@ -6,7 +6,7 @@
  *****************************************************************************/
 
 #include "dda.h"
-#include "fatSupport.h"
+#include "../fatSupport.h"
 
 // 13 is NOT the correct number -- you fix it!
 // #define BYTES_TO_READ_IN_BOOT_SECTOR 13
@@ -33,15 +33,12 @@ Stored Data
  *    set_fat_entry
  *****************************************************************************/
 
-FILE *FILE_SYSTEM_ID;
-int  BYTES_PER_SECTOR = 512;
-
-extern int read_sector(int sector_number, char* buffer);
+/*extern int read_sector(int sector_number, char* buffer);
 extern int write_sector(int sector_number, char* buffer);
 
 extern int  get_fat_entry(int fat_entry_number, char* fat);
 extern void set_fat_entry(int fat_entry_number, int value, char* fat);
-
+*/
 /******************************************************************************
  * main: an example of reading an item in the boot sector
  *****************************************************************************/

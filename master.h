@@ -44,7 +44,31 @@
 #define PWD_BUFSIZE 1024
 #endif
 
+#ifndef BYTES_PER_SECTOR
+#define BYTES_PER_SECTOR 512
+#endif
+
+FILE *FILE_SYSTEM_ID;
+
 typedef enum {FALSE, TRUE} bool;
+
+typedef struct bootSector
+{
+	int bytesPerSector,
+		sectorsPerCluster,
+		numOfFats,
+		numReservedSectors,
+		numRootEntries,
+		totalSectorCount,
+		sectorsPerFat,
+		sectorsPerTrack,
+		numOfHeads;
+	
+	char *bootSig; // hex
+	char *volId; // hex
+	char *volLabel; // str
+	char *fileSysType; // str
+} bootSector_t;
 
 // Useful shell functions
 int exitShell(char **argv);
@@ -68,5 +92,9 @@ bool readFile(int fd);
 
 // Function specific to pwd command
 int pwd(char **argv);
+
+// Functions specific to pbs command
+void printBootSector(bootSector_t *boot);
+int  readBootSector(bootSector_t *boot);
 
 #endif
