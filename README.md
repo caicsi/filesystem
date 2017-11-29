@@ -1,12 +1,6 @@
 # filesystem
 Final project for OS class
 
-
-NOTE: I did not do this exactly, but you'll see
-
-NOTE: Run make, then run the executable in build dir. To exit the shell properly, enter exit. Failing to run exit will result in a mem leak!
-
-
 Make the shell:
 Parent processor gives prompt
 PP checks if user input is valid command

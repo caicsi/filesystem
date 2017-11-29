@@ -43,7 +43,7 @@ extern void set_fat_entry(int fat_entry_number, int value, char* fat);
  * main: an example of reading an item in the boot sector
  *****************************************************************************/
 
-int main()
+int fat()
 {
 	// You must set two global variables for the disk access functions:
 	//      FILE_SYSTEM_ID         BYTES_PER_SECTOR
@@ -57,7 +57,7 @@ int main()
 	// BYTES_PER_SECTOR = BYTES_TO_READ_IN_BOOT_SECTOR;
 	// Then reset it per the value in the boot sector
 	
-	FILE_SYSTEM_ID = fopen("floppy1", "r+");
+	FILE_SYSTEM_ID = fopen(FLOPPY_NAME, "r+");
 
 	if (FILE_SYSTEM_ID == NULL)
 	{

@@ -25,7 +25,7 @@
 #include <string.h>
 
 #ifndef NUM_CMDS
-#define NUM_CMDS 5
+#define NUM_CMDS 6
 #endif
 
 #ifndef TOK_BUFSIZE
@@ -46,6 +46,10 @@
 
 #ifndef BYTES_PER_SECTOR
 #define BYTES_PER_SECTOR 512
+#endif
+
+#ifndef FLOPPY_NAME
+#define FLOPPY_NAME "floppy1"
 #endif
 
 FILE *FILE_SYSTEM_ID;
@@ -94,6 +98,7 @@ bool readFile(int fd);
 int pwd(char **argv);
 
 // Functions specific to pbs command
+int  fat();
 void printBootSector(bootSector_t *boot);
 int  readBootSector(bootSector_t *boot);
 

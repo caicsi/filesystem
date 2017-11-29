@@ -1,7 +1,7 @@
 CC=gcc
 CCFLAGS=-Wall
 
-SOURCES=$(wildcard *.c ./commands/*.c)
+SOURCES=$(wildcard *.c ./commands/*.c ./fat12/*.c)
 OBJECTS=$(SOURCES:.c=.o)
 
 EXECUTABLE=shell # change executable name as needed
