@@ -1,6 +1,14 @@
-int read_sector(int sector_number, char* buffer);
-int write_sector(int sector_number, char* buffer);
-int readBootSector(bootSector_t boot);
+#ifndef FAT_SUPPORT_H
+#define FAT_SUPPORT_H
 
-int get_fat_entry(int fat_entry_number, char* fat);
-void set_fat_entry(int fat_entry_number, int value, char* fat);
+#include "bootSector.h"
+
+int read_sector(int sector_number, char *buffer);
+int write_sector(int sector_number, char *buffer);
+int readBootSector(bootSector_t *boot);
+void printBootSector(bootSector_t *boot);
+
+int get_fat_entry(int fat_entry_number, char *fat);
+void set_fat_entry(int fat_entry_number, int value, char *fat);
+
+#endif

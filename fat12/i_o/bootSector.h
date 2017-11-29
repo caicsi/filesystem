@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct bootSector
 {
@@ -16,10 +17,10 @@ typedef struct bootSector
 		sectorsPerTrack,
 		numOfHeads;
 	
-	char *bootSig; // in hex
-	char *volId; // in hex
-	char *volLabel;
-	char *fileSysType;
+	char *bootSig; // hex
+	char *volId; // hex
+	char *volLabel; // str
+	char *fileSysType; // str
 } bootSector_t;
 
 #endif

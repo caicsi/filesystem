@@ -5,13 +5,11 @@
  *           March, 2004.
  *****************************************************************************/
 
-#include "bootSector.h"
-#include <string.h>
 #include "dda.h"
 #include "fatSupport.h"
 
 // 13 is NOT the correct number -- you fix it!
-#define BYTES_TO_READ_IN_BOOT_SECTOR 13
+// #define BYTES_TO_READ_IN_BOOT_SECTOR 13
 
 /******************************************************************************
  * You must set these global variables:
@@ -50,8 +48,6 @@ Number of reserved sectors
 FILE* FILE_SYSTEM_ID;
 int BYTES_PER_SECTOR = 512;
 
-bootSector_t BOOT_SECTOR;
-
 extern int read_sector(int sector_number, char* buffer);
 extern int write_sector(int sector_number, char* buffer);
 
@@ -87,13 +83,20 @@ int main()
 	}
 
 	// Set it to this only to read the boot sector
-	BYTES_PER_SECTOR = BYTES_TO_READ_IN_BOOT_SECTOR;
+	// BYTES_PER_SECTOR = BYTES_TO_READ_IN_BOOT_SECTOR;
 
 	// Then reset it per the value in the boot sector
 
 	//boot = (unsigned char*) malloc(BYTES_PER_SECTOR * sizeof(unsigned char));
 
+	bootSector_t *BOOT_SECTOR;
+	BOOT_SECTOR = (bootSector_t *)malloc(BYTES_PER_SECTOR * sizeof(bootSector_t));
+	
 	readBootSector(BOOT_SECTOR);
+	printBootSector(BOOT_SECTOR);
+
+	free(BOOT_SECTOR);
+	fclose(FILE_SYSTEM_ID);
 
 	return 0;
 }
