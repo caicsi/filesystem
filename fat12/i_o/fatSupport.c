@@ -244,13 +244,13 @@ int readBootSector(bootSector_t *boot)
 
 void printBootSector(bootSector_t *boot)
 {
-	printf("BytesPerSect: %i (512 expected)\n", boot->bytesPerSector);
-	printf("SectsPerClust: %i (1 expected)\n", boot->sectorsPerCluster);
-	printf("NumOfFats: %i (2 expected)\n", boot->numOfFats);
-	printf("NumResSects: %i (1 expected)\n", boot->numReservedSectors);
-	printf("NumRootEnts: %i (224 expected)\n", boot->numRootEntries);
-	printf("SectCount: %i (2880 expected)\n", boot->totalSectorCount);
-	printf("SectsPerFat: %i (9 expected)\n", boot->sectorsPerFat);
-	printf("SectsPerTrack: %i (18 expected)\n", boot->sectorsPerTrack);
-	printf("NumOfHeads: %i (2 expected)\n", boot->numOfHeads);
+	printf("Bytes per sector           = %i (512 expected)\n", boot->bytesPerSector);
+	printf("Sectors per cluster        = %i (1 expected)\n", boot->sectorsPerCluster);
+	printf("Number of FATs             = %i (2 expected)\n", boot->numOfFats);
+	printf("Number of reserved sectors = %i (1 expected)\n", boot->numReservedSectors);
+	printf("Number of root entries     = %i (224 expected)\n", boot->numRootEntries);
+	printf("Total sector count         = %i (2880 expected)\n", boot->totalSectorCount);
+	printf("Sectors per FAT            = %i (9 expected)\n", boot->sectorsPerFat);
+	printf("Sectors per track          = %i (18 expected)\n", boot->sectorsPerTrack);
+	printf("Number of heads            = %i (2 expected)\n", boot->numOfHeads);
 }
