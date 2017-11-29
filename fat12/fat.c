@@ -57,14 +57,6 @@ int fat()
 	// BYTES_PER_SECTOR = BYTES_TO_READ_IN_BOOT_SECTOR;
 	// Then reset it per the value in the boot sector
 	
-	FILE_SYSTEM_ID = fopen(FLOPPY_NAME, "r+");
-
-	if (FILE_SYSTEM_ID == NULL)
-	{
-		printf("Could not open the floppy drive or image.\n");
-		exit(1);
-	}
-	
 	bootSector_t *BOOT_SECTOR;
 	BOOT_SECTOR = (bootSector_t *) malloc(BYTES_PER_SECTOR * sizeof(bootSector_t));
 
@@ -72,7 +64,6 @@ int fat()
 	printBootSector(BOOT_SECTOR);
 
 	free(BOOT_SECTOR);
-	fclose(FILE_SYSTEM_ID);
 
 	return 0;
 }

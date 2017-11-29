@@ -128,8 +128,26 @@ int launch(char **argv)
   * */
 int main(int argc, char **argv)
 {
+	printf("Attempting to open floppy...\n");
+		
+	FILE_SYSTEM_ID = fopen(FLOPPY_NAME, "r+");
+
+	if (FILE_SYSTEM_ID == NULL)
+	{
+		printf("Could not open the floppy drive or image.\n");
+		exit(1);
+	}
+	
+	sleep(1);
+	
+	printf("Floppy is open...\n\nStarting shell. Enter 'exit' to leave.\n\n");
+	
+	sleep(1);
+	
 	// Run the loop that generates the shell
 	shellLoop();
+
+	fclose(FILE_SYSTEM_ID);
 
 	return EXIT_SUCCESS;
 }
