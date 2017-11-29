@@ -44,13 +44,13 @@ int executeCommand(char **argv)
 	// With a command entered, we run through the array of strings
 	// until we find which command was entered. After doing so, we
 	// run the corresponding function in the parallel array of functions
-	for (i = 0; i < NUM_CMDS; i++) 
+	/*for (i = 0; i < NUM_CMDS; i++) 
 	{
 		if (strcmp(argv[0], CMD_STRS[i]) == 0) 
 		{
 			return (*CMD_FUNCS[i])(argv);
 		}
-	}
+	}*/
 
 	// If we must execute a noncustom command,
 	// we call launch to fork a child that will
@@ -68,7 +68,8 @@ int executeCommand(char **argv)
 int launch(char **argv)
 {
 	pid_t pid, wpid;
-	int   status;
+	int   status, i;
+	bool  found = FALSE;
 
 	pid = fork();
 	
@@ -76,9 +77,23 @@ int launch(char **argv)
 	{
 		// Within a child, we use execvp to run 
 		// whichever command is entered
-		if (execvp(argv[0], argv) == -1) 
+		/*if (execvp(argv[0], argv) == -1) 
 		{
 			perror("execvp");
+		}*/
+		
+		for (i = 0; i < NUM_CMDS; i++) 
+		{
+			if (strcmp(argv[0], CMD_STRS[i]) == 0) 
+			{
+				(*CMD_FUNCS[i])(argv);
+				found = TRUE;
+			}
+		}
+		
+		if (found == FALSE)
+		{
+			printf("Command not recognized.\n");
 		}
 		
 		exit(EXIT_FAILURE);
@@ -96,7 +111,12 @@ int launch(char **argv)
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 
-  return 1;
+	if (strcmp(argv[0], "exit") == 0)
+	{
+		return 0;
+	}
+
+	return 1;
 }
 
 

@@ -7,6 +7,7 @@ OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=shell # change executable name as needed
 
 $(EXECUTABLE): $(OBJECTS)
+	make clean
 	$(CC) $(CCFLAGS) $(OBJECTS) -o $@
 	mkdir build
 	mv $(OBJECTS) $(EXECUTABLE) build
