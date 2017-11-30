@@ -12,6 +12,16 @@ void printBootSector(bootSector_t *boot)
 	printf("Sectors per FAT            = %i\n", boot->sectorsPerFat);
 	printf("Sectors per track          = %i\n", boot->sectorsPerTrack);
 	printf("Number of heads            = %i\n", boot->numOfHeads);
+	printf("Boot signature (in hex)    = %s\n", boot->bootSig);
+	// printf("Volume ID (in hex)         = %s\n", boot->volId);	
+	// printf("Volume label               = %s\n", boot->volLabel);	
+	// printf("File system type           = %s\n", boot->fileSysType);	
+	
+	// Expected:
+	// Boot signature (in hex) = 0x29
+	// Volume ID (in hex)      = 0x244f429d
+	// Volume label 		   = NO NAME
+	// File system type		   = FAT12 
 }
 
 
@@ -20,7 +30,7 @@ int readBootSector(bootSector_t *boot)
 	char *buffer;
 	int  mostSigBits, leastSigBits;
 
-	buffer = (char*) malloc(BYTES_PER_SECTOR * sizeof(char));
+	buffer = (char *) malloc(BYTES_PER_SECTOR * sizeof(char));
 
 	if (read_sector(0, buffer) == -1)
 	{
@@ -71,6 +81,19 @@ int readBootSector(bootSector_t *boot)
 	mostSigBits = (((int) buffer[27]) << 8) & 0x0000ff00;
 	leastSigBits = ((int) buffer[26]) & 0x000000ff;
 	boot->numOfHeads = mostSigBits | leastSigBits;
+
+	// boot signature (hex)
+	// mostSigBits = ((int) buffer[38]) & 0x000000ff;
+	// boot->bootSig = mostSigBits;
+
+	// volume ID (hex)
+	// boot->volId
+
+	// volume label
+	// boot->volLabel
+
+	// filesys type	
+	// boot->fileSysType
 
 	free(buffer);
 
