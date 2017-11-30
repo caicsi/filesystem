@@ -147,7 +147,7 @@ int main(int argc, char **argv)
 	// Run the loop that generates the shell
 	shellLoop();
 
-	printf("Closing floppy...\n");
+	printf("\nClosing floppy...\n");
 
 	fclose(FILE_SYSTEM_ID);
 	
