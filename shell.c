@@ -147,7 +147,15 @@ int main(int argc, char **argv)
 	// Run the loop that generates the shell
 	shellLoop();
 
+	printf("Closing floppy...\n");
+
 	fclose(FILE_SYSTEM_ID);
+	
+	sleep(1);
+	
+	printf("Floppy is closed...\n\nExiting shell...Sad to see you go\n");
+	
+	sleep(1);
 
 	return EXIT_SUCCESS;
 }

@@ -24,7 +24,5 @@
 // Source: https://github.com/brenns10/lsh
 int exitShell(char **argv)
 {
-	printf("Sad to see you go\n");
-	
 	return 0;
 }
