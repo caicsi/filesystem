@@ -12,7 +12,7 @@ void printBootSector(bootSector_t *boot)
 	printf("Sectors per FAT            = %i\n", boot->sectorsPerFat);
 	printf("Sectors per track          = %i\n", boot->sectorsPerTrack);
 	printf("Number of heads            = %i\n", boot->numOfHeads);
-	printf("Boot signature (in hex)    = %s\n", boot->bootSig);
+	// printf("Boot signature (in hex)    = %s\n", boot->bootSig);
 	// printf("Volume ID (in hex)         = %s\n", boot->volId);	
 	// printf("Volume label               = %s\n", boot->volLabel);	
 	// printf("File system type           = %s\n", boot->fileSysType);	
