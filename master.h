@@ -80,7 +80,6 @@ int help(char **argv);
 
 // Other functions specific to the shell
 int  executeCommand(char **argv);
-int  launch(char **argv);
 char **parseLine(char *line);
 char *readLine();
 void shellLoop();

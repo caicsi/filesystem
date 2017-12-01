@@ -33,56 +33,24 @@ int (*CMD_FUNCS[]) (char **) = {&cd, &cat, &help, &exitShell, &pwd, &readBootSec
   * */
 int executeCommand(char **argv)
 {
-	int i;
+	pid_t pid, wpid;
+	int   status, i;
+	bool  found = FALSE;
 
 	if (argv[0] == NULL)
 	{
 		// With no command entered, we return 1 
 		// just to continue the shell loop
-		return 1;
+		return EXIT_FAILURE;
 	}
 
-	// With a command entered, we run through the array of strings
-	// until we find which command was entered. After doing so, we
-	// run the corresponding function in the parallel array of functions
-	/*for (i = 0; i < NUM_CMDS; i++) 
-	{
-		if (strcmp(argv[0], CMD_STRS[i]) == 0) 
-		{
-			return (*CMD_FUNCS[i])(argv);
-		}
-	}*/
-
-	// If we must execute a noncustom command,
-	// we call launch to fork a child that will
-	// run the command
-	return launch(argv);
-}
-
-
- /*
-  * Pre:	 An optional vector of arguments
-  * Post:	 A specific noncustom command will be executed with the 
-  * 		 given arguments
-  * Purpose: To execute a noncustom command from the user
-  * */
-int launch(char **argv)
-{
-	pid_t pid, wpid;
-	int   status, i;
-	bool  found = FALSE;
-
 	pid = fork();
-	
+
 	if (pid == 0) // Child created successfully
 	{
-		// Within a child, we use execvp to run 
-		// whichever command is entered
-		/*if (execvp(argv[0], argv) == -1) 
-		{
-			perror("execvp");
-		}*/
-		
+		// With a command entered, we run through the array of strings
+		// until we find which command was entered. After doing so, we
+		// run the corresponding function in the parallel array of functions
 		for (i = 0; i < NUM_CMDS; i++) 
 		{
 			if (strcmp(argv[0], CMD_STRS[i]) == 0) 
@@ -94,7 +62,7 @@ int launch(char **argv)
 		
 		if (found == FALSE)
 		{
-			printf("Command not recognized.\n");
+			printf("Command is unrecognized.\n");
 		}
 		
 		exit(EXIT_FAILURE);
@@ -112,16 +80,19 @@ int launch(char **argv)
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 
+	// We intentional return failure to continue running the shell 
+	// loop. 'exit' will result in success and cause the loop to 
+	// terminate
 	if (strcmp(argv[0], "exit") == 0)
 	{
-		return 0;
+		return EXIT_SUCCESS;
 	}
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 
- /*
+/*
   * Pre:	 An optional vector of arguments
   * Post:	 A user will have interacted with a custom shell
   * Purpose: To run a custom shell with built-in commands
