@@ -68,7 +68,7 @@ typedef struct bootSector
 		sectorsPerTrack,
 		numOfHeads;
 	
-	char *bootSig; // hex
+	char bootSig; // hex
 	char *volId; // hex
 	char *volLabel; // str
 	char *fileSysType; // str
