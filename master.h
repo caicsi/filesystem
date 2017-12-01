@@ -101,7 +101,7 @@ void printBootSector(bootSector_t *boot);
 int  readBootSector();
 
 // Functions specific to pfe command
-bool checkRange(int x, int y);
+int  checkRange(int x, int y);
 int  pfe(char **argv);
 char *readFAT12Table(int sectNum, char *buffer);
 
