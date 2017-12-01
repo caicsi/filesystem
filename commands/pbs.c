@@ -25,19 +25,22 @@ void printBootSector(bootSector_t *boot)
 }
 
 
-int readBootSector(bootSector_t *boot)
+int readBootSector()
 {
-	char *buffer;
-	int  mostSigBits, leastSigBits;
+	char 		 *buffer;
+	int  		 mostSigBits, leastSigBits;
+	bootSector_t *boot;
 
 	buffer = (char *) malloc(BYTES_PER_SECTOR * sizeof(char));
+	boot = (bootSector_t *) malloc(BYTES_PER_SECTOR * sizeof(bootSector_t));
 
+	// read sector from file to buffer
 	if (read_sector(0, buffer) == -1)
 	{
 		printf("Something has gone wrong -- could not read the boot sector\n");
 	}
-	
-	// assign values
+
+	// assign values to bootSector_t object
 	
 	// bytes per sector
 	mostSigBits = (((int) buffer[12]) << 8) & 0x0000ff00;
@@ -95,7 +98,14 @@ int readBootSector(bootSector_t *boot)
 	// filesys type	
 	// boot->fileSysType
 
+	// free buffer after assigning values
 	free(buffer);
+	
+	// print values of bootSector_t object
+	printBootSector(boot);
+
+	// free the bootSector_t object after printing values
+	free(boot);
 
 	return EXIT_SUCCESS;
 }

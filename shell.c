@@ -22,7 +22,7 @@
 // Global array of custom commands
 char *CMD_STRS[] = {"cd", "cat", "help", "exit", "pwd", "pbs"};
 // Global parallel array of corresponding functions
-int (*CMD_FUNCS[]) (char **) = {&cd, &cat, &help, &exitShell, &pwd, &fat};
+int (*CMD_FUNCS[]) (char **) = {&cd, &cat, &help, &exitShell, &pwd, &readBootSector};
 // NOTE: fat is a place holder at the moment for testing
 
 

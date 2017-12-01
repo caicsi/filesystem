@@ -98,8 +98,7 @@ bool readFile(int fd);
 int pwd(char **argv);
 
 // Functions specific to pbs command
-int  fat();
 void printBootSector(bootSector_t *boot);
-int  readBootSector(bootSector_t *boot);
+int  readBootSector();
 
 #endif

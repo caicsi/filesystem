@@ -60,7 +60,7 @@ int fat()
 	bootSector_t *BOOT_SECTOR;
 	BOOT_SECTOR = (bootSector_t *) malloc(BYTES_PER_SECTOR * sizeof(bootSector_t));
 
-	readBootSector(BOOT_SECTOR);
+	// readBootSector(BOOT_SECTOR);
 	printBootSector(BOOT_SECTOR);
 
 	free(BOOT_SECTOR);
