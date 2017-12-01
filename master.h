@@ -25,7 +25,7 @@
 #include <string.h>
 
 #ifndef NUM_CMDS
-#define NUM_CMDS 6
+#define NUM_CMDS 7
 #endif
 
 #ifndef TOK_BUFSIZE
@@ -99,5 +99,10 @@ int pwd(char **argv);
 // Functions specific to pbs command
 void printBootSector(bootSector_t *boot);
 int  readBootSector();
+
+// Functions specific to pfe command
+bool checkRange(int x, int y);
+int  pfe(char **argv);
+char *readFAT12Table(int sectNum, char *buffer);
 
 #endif
