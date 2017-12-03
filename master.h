@@ -70,7 +70,7 @@ typedef struct bootSector
 	
 	char bootSig; // hex
 	char *volId; // hex
-	char *volLabel; // str
+	char volLabel[11]; // str
 	char *fileSysType; // str
 } bootSector_t;
 
