@@ -47,7 +47,7 @@ int cat(char **argv) // Note, this is main function of cat
 		}
 	}
 	
-	return 1;
+	return EXIT_SUCCESS;
 }
 
 

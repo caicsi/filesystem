@@ -1,5 +1,51 @@
+/*
+ * Author: 		  Cai Blanchard, Max Capote
+ * Class: 		  CSI-385-201
+ * Assignment: 	  Semester Project
+ * Date Assigned: 25 October 2017
+ * Due Date: 	  13 December 2017
+ * 
+ * Description:   Implementation of the pbs command
+ * 
+ * Certification of Authenticity:
+ * We certify that this assignment is entirely our own work 
+ * and all additional sources are cited. 
+ */
+ 
+
 #include "../fatSupport.h"
 
+
+/*
+ * Pre:		A FAT12 image must be available for reading
+ * Post:	Information about the bootSector_t object is printed
+ * 			to screen
+ * Purpose: To display the information in the boot sector of the 
+ * 			FAT12 image
+ * */
+int pbs()
+{
+	bootSector_t *boot;
+	
+	boot = (bootSector_t *) malloc(BYTES_PER_SECTOR * sizeof(bootSector_t));
+	
+	// Assign values to bootSector_t object	from the boot sector
+	readBootSector(boot);
+
+	// free the bootSector_t object after printing values
+	free(boot);
+	
+	return EXIT_SUCCESS;
+}
+
+
+/*
+ * Pre:		A bootSector_t object must be passed
+ * Post:	Information about the bootSector_t object is printed
+ * 			to screen
+ * Purpose: To display the information in the boot sector of the 
+ * 			FAT12 image
+ * */
 void printBootSector(bootSector_t *boot)
 {
 	int i;
@@ -15,9 +61,10 @@ void printBootSector(bootSector_t *boot)
 	printf("Number of heads            = %i\n", boot->numOfHeads);
 	printf("Boot signature (in hex)    = 0x%x\n", boot->bootSig);
 	printf("Volume ID (in hex)         = 0x");
-	for (i = 0; i < 4; i++) 
+	
+	for (i = 0; i < VOL_ID; i++) 
 	{
-		if (i == 3)
+		if (i == (VOL_ID - 1))
 		{
 			printf("%x\n", (unsigned int)(unsigned char)boot->volId[i]);
 		}
@@ -26,23 +73,31 @@ void printBootSector(bootSector_t *boot)
 			printf("%x", boot->volId[i]);
 		}
 	}
+	
 	printf("Volume label               = ");
-	for (i = 0; i < 11; i++) 
+	
+	for (i = 0; i < VOL_LABEL; i++) 
 	{
 		printf("%c", boot->volLabel[i]);
 	}
+	
 	printf("\nFile system type           = %s\n", boot->fileSysType);
 }
 
 
-int readBootSector()
+/*
+ * Pre:		A bootSector_t object must be passed
+ * Post:	Information in the boot sector of the FAT12 image
+ * 			is assigned to a bootSector_t object
+ * Purpose: To read from the FAT12 boot sector and then assign 
+ * 			values to an object
+ * */
+void readBootSector(bootSector_t *boot)
 {
-	char 		 *buffer;
-	int  		 mostSigBits, leastSigBits, i;
-	bootSector_t *boot;
+	char *buffer;
+	int  mostSigBits, leastSigBits, i;
 
 	buffer = (char *) malloc(BYTES_PER_SECTOR * sizeof(char));
-	boot = (bootSector_t *) malloc(BYTES_PER_SECTOR * sizeof(bootSector_t));
 
 	// read sector from file to buffer
 	if (read_sector(0, buffer) == -1)
@@ -99,7 +154,7 @@ int readBootSector()
 	boot->bootSig = buffer[38];
 
 	// volume ID (hex)
-	char volIdStr[4];
+	char volIdStr[VOL_ID];
 	
 	for (i = 42; i > 38; i--) 
 	{
@@ -109,26 +164,26 @@ int readBootSector()
 	boot->volId = volIdStr;
 
 	// volume label
-	char volLabelStr[11];
+	char volLabelStr[VOL_LABEL];
 	
-	for (i = 0; i < 11; i++)
+	for (i = 0; i < VOL_LABEL; i++)
 	{
 		volLabelStr[i] = buffer[43 + i];
 	}
 	
-	for (i = 0; i < 11; i++)
+	for (i = 0; i < VOL_LABEL; i++)
 	{
 		boot->volLabel[i] = volLabelStr[i];
 	}
 
 	// filesys type	
-	char fileSysStr[8];
+	char fileSysStr[FILE_SYS_TYPE];
 	
-	for (i = 0; i < 8; i++)
+	for (i = 0; i < FILE_SYS_TYPE; i++)
 	{
 		fileSysStr[i] = buffer[54 + i];
 	}
-	
+
 	boot->fileSysType = fileSysStr;
 
 	// free buffer after assigning values
@@ -136,9 +191,4 @@ int readBootSector()
 	
 	// print values of bootSector_t object
 	printBootSector(boot);
-
-	// free the bootSector_t object after printing values
-	free(boot);
-
-	return EXIT_SUCCESS;
 }

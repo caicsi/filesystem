@@ -46,5 +46,5 @@ int cd(char **argv)
 		}
 	}
 	
-	return 1;
+	return EXIT_SUCCESS;
 }

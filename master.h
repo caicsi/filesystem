@@ -25,7 +25,7 @@
 #include <string.h>
 
 #ifndef NUM_CMDS
-#define NUM_CMDS 7
+#define NUM_CMDS 6
 #endif
 
 #ifndef TOK_BUFSIZE
@@ -52,6 +52,18 @@
 #define FLOPPY_NAME "floppy1"
 #endif
 
+#ifndef VOL_ID
+#define VOL_ID 4
+#endif
+
+#ifndef VOL_LABEL
+#define VOL_LABEL 11
+#endif
+
+#ifndef FILE_SYS_TYPE
+#define FILE_SYS_TYPE 8
+#endif
+
 FILE *FILE_SYSTEM_ID;
 
 typedef enum {FALSE, TRUE} bool;
@@ -70,12 +82,11 @@ typedef struct bootSector
 	
 	char bootSig; // hex
 	char *volId; // hex
-	char volLabel[11]; // str
+	char volLabel[VOL_LABEL]; // str
 	char *fileSysType; // str
 } bootSector_t;
 
-// Useful shell functions
-int exitShell(char **argv);
+// Help shell function
 int help(char **argv);
 
 // Other functions specific to the shell
@@ -97,8 +108,9 @@ bool readFile(int fd);
 int pwd(char **argv);
 
 // Functions specific to pbs command
+int  pbs();
 void printBootSector(bootSector_t *boot);
-int  readBootSector();
+void readBootSector(bootSector_t *boot);
 
 // Functions specific to pfe command
 int  checkRange(int x, int y);

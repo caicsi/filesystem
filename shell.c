@@ -11,7 +11,7 @@
  * We certify that this assignment is entirely our own work 
  * and all additional sources are cited. 
  */
- 
+
 
 #include "master.h"
 
@@ -20,10 +20,9 @@
 
 
 // Global array of custom commands
-char *CMD_STRS[] = {"cd", "cat", "help", "exit", "pwd", "pbs", "pfe"};
+char *CMD_STRS[] = {"help", "pbs", "cd", "cat", "pwd", "pfe"};
 // Global parallel array of corresponding functions
-int (*CMD_FUNCS[]) (char **) = {&cd, &cat, &help, &exitShell, &pwd, 
-								&readBootSector, &pfe};
+int (*CMD_FUNCS[]) (char **) = {&help, &pbs, &cd, &cat, &pwd, &pfe};
 // NOTE: fat is a place holder at the moment for testing
 
 
@@ -45,6 +44,13 @@ int executeCommand(char **argv)
 		return EXIT_FAILURE;
 	}
 
+	// 'exit' will result in success and cause the loop to 
+	// terminate
+	if (strcmp(argv[0], "exit") == 0)
+	{
+		return EXIT_SUCCESS;
+	}
+
 	pid = fork();
 
 	if (pid == 0) // Child created successfully
@@ -58,6 +64,7 @@ int executeCommand(char **argv)
 			{
 				(*CMD_FUNCS[i])(argv);
 				found = TRUE;
+				break;
 			}
 		}
 		
@@ -81,14 +88,6 @@ int executeCommand(char **argv)
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 
-	// We intentional return failure to continue running the shell 
-	// loop. 'exit' will result in success and cause the loop to 
-	// terminate
-	if (strcmp(argv[0], "exit") == 0)
-	{
-		return EXIT_SUCCESS;
-	}
-
 	return EXIT_FAILURE;
 }
 
@@ -110,11 +109,11 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 	
-	sleep(1);
+	// sleep(1);
 	
 	printf("Floppy is open...\n\nStarting shell. Enter 'exit' to leave.\n\n");
 	
-	sleep(1);
+	// sleep(1);
 	
 	// Run the loop that generates the shell
 	shellLoop();
@@ -123,11 +122,11 @@ int main(int argc, char **argv)
 
 	fclose(FILE_SYSTEM_ID);
 	
-	sleep(1);
+	// sleep(1);
 	
 	printf("Floppy is closed...\n\nExiting shell...Sad to see you go\n");
 	
-	sleep(1);
+	// sleep(1);
 
 	return EXIT_SUCCESS;
 }

@@ -35,5 +35,5 @@ int pwd(char **argv)
 		perror("getcwd");
 	}
 	
-	return 1;
+	return EXIT_SUCCESS;
 }
