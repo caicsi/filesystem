@@ -11,7 +11,7 @@
  *          March, 2004.
  *****************************************************************************/
 
-#include "../fatSupport.h"
+#include "fatSupport.h"
 
 /******************************************************************************
  * FILE_SYSTEM_ID -- the file id for the file system (here, the floppy disk
@@ -19,7 +19,7 @@
  * BYTES_PER_SECTOR -- the number of bytes in each sector of the filesystem
  *****************************************************************************/
 
-// extern FILE* FILE_SYSTEM_ID;
+// extern FILE *FILE_SYSTEM_ID;
 // extern int BYTES_PER_SECTOR;
 
 /******************************************************************************

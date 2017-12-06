@@ -3,9 +3,9 @@
  * Class: 		  CSI-385-201
  * Assignment: 	  Semester Project
  * Date Assigned: 25 October 2017
- * Due Date: 	  6 December 2017
+ * Due Date: 	  13 December 2017
  * 
- * Description:   Implementation of the commands
+ * Description:  Primary header file for the c programs
  * 
  * Certification of Authenticity:
  * We certify that this assignment is entirely our own work 
@@ -23,6 +23,7 @@
 #include <sys/wait.h>
 #include <dirent.h>
 #include <string.h>
+#include "dda.h"
 
 #ifndef NUM_CMDS
 #define NUM_CMDS 6
@@ -86,15 +87,21 @@ typedef struct bootSector
 	char *fileSysType; // str
 } bootSector_t;
 
-// Help shell function
-int help(char **argv);
-
-// Other functions specific to the shell
+// Primary functions for the shell
 int  executeCommand(char **argv);
 char **parseLine(char *line);
 char *readLine();
 void shellLoop();
 
+// A help function for the shell
+int help(char **argv);
+
+// Functions specific to pbs command
+int  pbs();
+void printBootSector(bootSector_t *boot);
+void readBootSector(bootSector_t *boot);
+
+// ------------------------------------------
 // Function specific to cd command
 int cd(char **argv);
 
@@ -106,11 +113,7 @@ bool readFile(int fd);
 
 // Function specific to pwd command
 int pwd(char **argv);
-
-// Functions specific to pbs command
-int  pbs();
-void printBootSector(bootSector_t *boot);
-void readBootSector(bootSector_t *boot);
+// ------------------------------------------
 
 // Functions specific to pfe command
 int  checkRange(int x, int y);
