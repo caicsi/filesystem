@@ -65,6 +65,10 @@
 #define FILE_SYS_TYPE 8
 #endif
 
+#ifndef SIZE_OF_FAT
+#define SIZE_OF_FAT 9
+#endif
+
 FILE *FILE_SYSTEM_ID;
 
 typedef enum {FALSE, TRUE} bool;
@@ -118,6 +122,7 @@ int pwd(char **argv);
 // Functions specific to pfe command
 int  checkRange(int x, int y);
 int  pfe(char **argv);
-char *readFAT12Table(int sectNum, char *buffer);
+int  printEntries(int entOne, int entTwo);
+char *readFAT12Table(int fatTable, char *buffer);
 
 #endif
