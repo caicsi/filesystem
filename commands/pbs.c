@@ -171,10 +171,7 @@ void readBootSector(bootSector_t *boot)
 		volLabelStr[i] = buffer[43 + i];
 	}
 	
-	for (i = 0; i < VOL_LABEL; i++)
-	{
-		boot->volLabel[i] = volLabelStr[i];
-	}
+	boot->volLabel = volLabelStr;
 
 	// filesys type	
 	char fileSysStr[FILE_SYS_TYPE];

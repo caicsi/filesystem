@@ -102,6 +102,11 @@ int main(int argc, char **argv)
 	printf("Attempting to open floppy...\n");
 		
 	FILE_SYSTEM_ID = fopen(FLOPPY_NAME, "r+");
+	
+	if(fseek(FILE_SYSTEM_ID, ROOT_START, SEEK_SET) == -1)
+	{
+		perror("fseek");
+	}
 
 	if (FILE_SYSTEM_ID == NULL)
 	{

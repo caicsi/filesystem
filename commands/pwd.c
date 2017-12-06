@@ -24,11 +24,19 @@
  */
 int pwd(char **argv)
 {
+	int c, i;
+	
 	char cwd[PWD_BUFSIZE];
    
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
 		fprintf(stdout, "CWD: %s\n", cwd);
+	}
+	
+	if (fseek(FILE_SYSTEM_ID, 0, SEEK_CUR) == 0)
+	{
+		fprintf(stdout, "CWD: %s\n", cwd);
+		
 	}
 	else
 	{

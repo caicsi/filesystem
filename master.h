@@ -69,6 +69,14 @@
 #define SIZE_OF_FAT 9
 #endif
 
+#ifndef ROOT_START
+#define ROOT_START 19
+#endif
+
+#ifndef ROOT_END
+#define ROOT_END 32
+#endif
+
 FILE *FILE_SYSTEM_ID;
 
 typedef enum {FALSE, TRUE} bool;
@@ -87,7 +95,7 @@ typedef struct bootSector
 	
 	char bootSig; // hex
 	char *volId; // hex
-	char volLabel[VOL_LABEL]; // str
+	char *volLabel; // str
 	char *fileSysType; // str
 } bootSector_t;
 

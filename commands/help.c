@@ -27,7 +27,7 @@ int help(char **argv)
 {
 	printf("Credit to Stephen Brennan's GitHub Project\n\n");
 	printf("Type a command name, provide arguments if applicable, and hit enter.\n");
-	printf("Commands implemented:\nhelp\npbs\n");
+	printf("Commands implemented:\nhelp\npbs\nexit\n");
 
 	return EXIT_SUCCESS;
 }

@@ -18,7 +18,7 @@
 
 int checkRange(int x, int y)
 {
-	if ((x <  2) || (x > y))
+	if ((x < 2) || (x > y) || (y > 18) || ((x < 9) && (y > 9)))
 	{
 		return EXIT_FAILURE;
 	}
@@ -49,7 +49,7 @@ int  printEntries(int entOne, int entTwo)
 
 	buffer = readFAT12Table(1, buffer);
 
-	free(buffer);
+	//free(buffer);
 
 	return EXIT_SUCCESS;
 }
@@ -74,6 +74,7 @@ char *readFAT12Table(int fatTable, char *buffer)
 
 	for (i = start; i <= end; i++)
 	{
+		//printf("now reading sector\n");
 		read_sector(i + 1, &buffer[i * BYTES_PER_SECTOR]);
 	}
 
