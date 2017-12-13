@@ -4,10 +4,10 @@ CCFLAGS=-Wall
 SOURCES=$(wildcard *.c ./commands/*.c)
 OBJECTS=$(SOURCES:.c=.o)
 
-EXECUTABLE=shell # change executable name as needed
+EXECUTABLE=fat12 # change executable name as needed
 
 $(EXECUTABLE): $(OBJECTS)
-	make clean # added for convenience while testing
+	make clean # line added for convenience while testing
 	$(CC) $(CCFLAGS) $(OBJECTS) -o $@
 	mkdir build
 	mv $(OBJECTS) $(EXECUTABLE) build

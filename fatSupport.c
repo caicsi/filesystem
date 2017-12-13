@@ -19,9 +19,6 @@
  * BYTES_PER_SECTOR -- the number of bytes in each sector of the filesystem
  *****************************************************************************/
 
-// extern FILE *FILE_SYSTEM_ID;
-// extern int BYTES_PER_SECTOR;
-
 /******************************************************************************
  * read_sector
  *

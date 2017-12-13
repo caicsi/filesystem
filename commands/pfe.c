@@ -16,8 +16,17 @@
 #include "../fatSupport.h"
 
 
+ /*
+  * Pre:	 Two integer values
+  * Post:	 Return success if the values are valid and failure if the 
+  * 		 values are invalid
+  * Purpose: To determine if the provided values are within an 
+  * 		 appropriate range 
+  * */
 int checkRange(int x, int y)
 {
+	// The values used here are specific to sectors that correlate to 
+	// FAT tables (primary or backup)
 	if ((x < 2) || (x > y) || (y > 18) || ((x < 9) && (y > 9)))
 	{
 		return EXIT_FAILURE;
@@ -27,6 +36,12 @@ int checkRange(int x, int y)
 }
 
 
+ /*
+  * Pre:	 An optional list of arguments
+  * Post:	 Entry values of logical sectors are printed to screen
+  * Purpose: Print the 12-bit FAT entry values representing logical 
+  * 		 sectors x to y
+  * */
 int pfe(char **argv)
 {
 	int  entOne = atoi(argv[1]), entTwo = atoi(argv[2]), i;
@@ -43,18 +58,29 @@ int pfe(char **argv)
 }
 
 
+ /*
+  * Pre:	 Two integer values indicating the range of sectors
+  * Post:	 12-bit entry values are printed to screen
+  * Purpose: Print the 12-bit FAT entry values representing logical 
+  * 		 sectors x to y
+  * */
 int  printEntries(int entOne, int entTwo)
 {
 	char *buffer;
 
 	buffer = readFAT12Table(1, buffer);
 
-	//free(buffer);
+	// free(buffer);
 
 	return EXIT_SUCCESS;
 }
 
 
+ /*
+  * Pre:	 An integer value indicating a FAT table, and an adequate buffer
+  * Post:	 The contents of the specified FAT table are read into the buffer
+  * Purpose: To read a FAT table entirely into a buffer
+  * */
 char *readFAT12Table(int fatTable, char *buffer)
 {
 	int i, start = 0, end = 0;
@@ -74,7 +100,6 @@ char *readFAT12Table(int fatTable, char *buffer)
 
 	for (i = start; i <= end; i++)
 	{
-		//printf("now reading sector\n");
 		read_sector(i + 1, &buffer[i * BYTES_PER_SECTOR]);
 	}
 

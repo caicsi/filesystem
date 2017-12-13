@@ -5,7 +5,7 @@
  * Date Assigned: 25 October 2017
  * Due Date: 	  13 December 2017
  * 
- * Description:  Primary header file for the c programs
+ * Description:  Primary header file for our c files
  * 
  * Certification of Authenticity:
  * We certify that this assignment is entirely our own work 
@@ -26,7 +26,7 @@
 #include "dda.h"
 
 #ifndef NUM_CMDS
-#define NUM_CMDS 6
+#define NUM_CMDS 4
 #endif
 
 #ifndef TOK_BUFSIZE
@@ -93,8 +93,8 @@ typedef struct bootSector
 		sectorsPerTrack,
 		numOfHeads;
 	
-	char bootSig; // hex
-	char *volId; // hex
+	char bootSig; // hex value
+	char *volId; // hex value
 	char *volLabel; // str
 	char *fileSysType; // str
 } bootSector_t;
@@ -113,19 +113,8 @@ int  pbs();
 void printBootSector(bootSector_t *boot);
 void readBootSector(bootSector_t *boot);
 
-// ------------------------------------------
-// Function specific to cd command
-int cd(char **argv);
-
-// Functions specific to cat command
-int  cat(char **argv);
-bool isDir(const char *filename);
-bool openFile(const char *filename);
-bool readFile(int fd);
-
 // Function specific to pwd command
 int pwd(char **argv);
-// ------------------------------------------
 
 // Functions specific to pfe command
 int  checkRange(int x, int y);

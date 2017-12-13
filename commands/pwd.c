@@ -3,9 +3,9 @@
  * Class: 		  CSI-385-201
  * Assignment: 	  Semester Project
  * Date Assigned: 25 October 2017
- * Due Date: 	  6 December 2017
+ * Due Date: 	  13 December 2017
  * 
- * Description:   Implementation of the commands
+ * Description:   Implementation of the pwd command
  * 
  * Certification of Authenticity:
  * We certify that this assignment is entirely our own work 
@@ -24,6 +24,8 @@
  */
 int pwd(char **argv)
 {
+	// Does not read from FAT12 system in current state
+	
 	int c, i;
 	
 	char cwd[PWD_BUFSIZE];

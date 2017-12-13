@@ -20,10 +20,9 @@
 
 
 // Global array of custom commands
-char *CMD_STRS[] = {"help", "pbs", "cd", "cat", "pwd", "pfe"};
+char *CMD_STRS[] = {"help", "pbs", "pwd", "pfe"};
 // Global parallel array of corresponding functions
-int (*CMD_FUNCS[]) (char **) = {&help, &pbs, &cd, &cat, &pwd, &pfe};
-// NOTE: fat is a place holder at the moment for testing
+int (*CMD_FUNCS[]) (char **) = {&help, &pbs, &pwd, &pfe};
 
 
  /*
@@ -106,19 +105,20 @@ int main(int argc, char **argv)
 	if(fseek(FILE_SYSTEM_ID, ROOT_START, SEEK_SET) == -1)
 	{
 		perror("fseek");
+		return EXIT_FAILURE;
 	}
 
 	if (FILE_SYSTEM_ID == NULL)
 	{
 		printf("Could not open the floppy drive or image.\n");
-		exit(1);
+		return EXIT_FAILURE;
 	}
 	
-	// sleep(1);
+	sleep(1); // Thrown in for theatrics
 	
 	printf("Floppy is open...\n\nStarting shell. Enter 'exit' to leave.\n\n");
 	
-	// sleep(1);
+	sleep(1);
 	
 	// Run the loop that generates the shell
 	shellLoop();
@@ -127,11 +127,11 @@ int main(int argc, char **argv)
 
 	fclose(FILE_SYSTEM_ID);
 	
-	// sleep(1);
+	sleep(1);
 	
 	printf("Floppy is closed...\n\nExiting shell...Sad to see you go\n");
 	
-	// sleep(1);
+	sleep(1);
 
 	return EXIT_SUCCESS;
 }
