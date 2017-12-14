@@ -24,26 +24,19 @@
  */
 int pwd(char **argv)
 {
-	// Does not read from FAT12 system in current state
+	// Does not read from FAT12 system correctly in current state
 	
-	int c, i;
+	int  bytes_read;
+	char *buffer;
 	
-	char cwd[PWD_BUFSIZE];
-   
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	if (fseek(FILE_SYSTEM_ID, 0, SEEK_CUR) == -1)
 	{
-		fprintf(stdout, "CWD: %s\n", cwd);
+		perror("fseek");
+		return EXIT_FAILURE;
 	}
 	
-	if (fseek(FILE_SYSTEM_ID, 0, SEEK_CUR) == 0)
-	{
-		fprintf(stdout, "CWD: %s\n", cwd);
-		
-	}
-	else
-	{
-		perror("getcwd");
-	}
+	bytes_read = fread(buffer, sizeof(char), BYTES_PER_SECTOR, FILE_SYSTEM_ID);
+
 	
 	return EXIT_SUCCESS;
 }
