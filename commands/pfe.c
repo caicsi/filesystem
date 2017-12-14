@@ -44,7 +44,7 @@ int checkRange(int x, int y)
   * */
 int pfe(char **argv)
 {
-	int  entOne = atoi(argv[1]), entTwo = atoi(argv[2]), i;
+	int entOne = atoi(argv[1]), entTwo = atoi(argv[2]);
 
 	if (checkRange(entOne, entTwo))
 	{
@@ -66,11 +66,17 @@ int pfe(char **argv)
   * */
 int  printEntries(int entOne, int entTwo)
 {
+	int   i, mostSigBits;
 	char *buffer;
 
 	buffer = readFAT12Table(1, buffer);
-
-	// free(buffer);
+	
+	//i = (BYTES_PER_SECTOR * entOne); i < (BYTES_PER_SECTOR * entTwo); i=i+512
+	for (i = 0; i < 10; i++)
+	{
+		mostSigBits = ((int) buffer[i]) & 0x000000ff;
+		printf("buffer entry %i: %i\n", i, mostSigBits);
+	}
 
 	return EXIT_SUCCESS;
 }
@@ -83,7 +89,8 @@ int  printEntries(int entOne, int entTwo)
   * */
 char *readFAT12Table(int fatTable, char *buffer)
 {
-	int i, start = 0, end = 0;
+	int i, start = 0, end = 0, mostSigBits, leastSigBits;
+	char temp[SIZE_OF_FAT];
 	
 	buffer = (char *) malloc(BYTES_PER_SECTOR * sizeof(char) * SIZE_OF_FAT);
 
@@ -98,9 +105,13 @@ char *readFAT12Table(int fatTable, char *buffer)
 		end = 18;
 	}
 
-	for (i = start; i <= end; i++)
+	for (i = start; i < end; i++)
 	{
-		read_sector(i + 1, &buffer[i * BYTES_PER_SECTOR]);
+		printf("read_sector return value: %i\n", read_sector(i + 1, &buffer[i * BYTES_PER_SECTOR]));
+		mostSigBits = (((int) buffer[i * BYTES_PER_SECTOR]) << 8) & 0x0000ff00;
+		leastSigBits = ((int) buffer[(i + 1) * BYTES_PER_SECTOR]) & 0x000000ff;
+		temp[i] = mostSigBits | leastSigBits;
+		printf("entry maybe %i\n", temp[i]);
 	}
 
 	return buffer;

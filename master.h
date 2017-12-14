@@ -37,10 +37,6 @@
 #define TOK_DELIM " \t\r\n\a"
 #endif
 
-#ifndef CAT_BUFSIZE 
-#define CAT_BUFSIZE 4096
-#endif
-
 #ifndef PWD_BUFSIZE
 #define PWD_BUFSIZE 1024
 #endif
